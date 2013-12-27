@@ -1,0 +1,5 @@
+en:
+  time_of_day:
+    formats:
+      default: '%k:%M'
+      hour: '%k'
