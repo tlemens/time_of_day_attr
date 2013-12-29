@@ -34,7 +34,6 @@ module TimeOfDayAttr
     def self.time_of_day_attr *attrs
       options = attrs.extract_options!
       options[:formats] ||= [:default, :hour]
-      validates_time_of_day *attrs, options
       attrs.each do |attr|
         define_method("#{attr}=") do |value|
           if value.is_a?(String)
