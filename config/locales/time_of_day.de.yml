@@ -1,5 +1,5 @@
 de:
   time_of_day:
     formats:
-      default: '%k.%M'
+      default: '%k:%M'
       hour: '%k'
