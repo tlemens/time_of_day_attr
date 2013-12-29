@@ -1,12 +1,9 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-# Maintain your gem's version:
-require "time_of_day_attr/version"
-
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "time_of_day_attr"
-  s.version     = TimeOfDayAttr::VERSION
+  s.version     = "0.0.2"
   s.authors     = ["Clemens Teichmann"]
   s.email       = ["clemens_t@web.de"]
   s.homepage    = "https://github.com/clemenst/time_of_day_attr"
