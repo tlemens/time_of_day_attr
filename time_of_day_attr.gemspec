@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "time_of_day_attr"
-  s.version     = "0.0.2"
+  s.version     = "0.0.3"
   s.authors     = ["Clemens Teichmann"]
   s.email       = ["clemens_t@web.de"]
   s.homepage    = "https://github.com/clemenst/time_of_day_attr"
