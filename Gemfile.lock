@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    time_of_day_attr (0.0.2)
+    time_of_day_attr (0.0.3)
       rails (~> 3.2.14)
 
 GEM

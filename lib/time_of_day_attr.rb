@@ -1,3 +1,10 @@
+require 'time_of_day_attr/active_record_ext'
+require 'action_view'
+require 'time_of_day_attr/form_builder_ext'
+
+files = Dir[File.join(File.dirname(__FILE__), '../config/locales/*.yml')]
+I18n.load_path.concat(files)
+
 module TimeOfDayAttr
   
   class << self
@@ -29,25 +36,4 @@ module TimeOfDayAttr
 
   end
 
-  ActiveRecord::Base.class_eval do
-
-    def self.time_of_day_attr *attrs
-      options = attrs.extract_options!
-      options[:formats] ||= [:default, :hour]
-      attrs.each do |attr|
-        define_method("#{attr}=") do |value|
-          if value.is_a?(String)
-            delocalized_values = options[:formats].map { |format| TimeOfDayAttr.delocalize(value, format: format) rescue nil }
-            value = delocalized_values.compact.first || send(attr)
-          end
-          super(value)
-        end
-      end
-    end
-
-  end
-
 end
-
-files = Dir[File.join(File.dirname(__FILE__), '../config/locales/*.yml')]
-I18n.load_path.concat(files)
