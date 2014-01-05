@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/time_of_day_attr.png)](http://badge.fury.io/rb/time_of_day_attr) [![Code Climate](https://codeclimate.com/github/clemenst/time_of_day_attr.png)](https://codeclimate.com/github/clemenst/time_of_day_attr)
+
 # time_of_day_attr
 
 Convert time of day to seconds since midnight and back.
@@ -69,10 +71,8 @@ end
 
 ```ruby
 business_hour = BusinessHour.new(opening: '09-00')
-
 business_hour.opening
  => 32400
-
 TimeOfDayAttr.l(business_hour.opening, format: :custom)
  => '09-00'
 ```
