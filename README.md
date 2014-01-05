@@ -2,26 +2,33 @@
 
 Convert time of day to seconds since midnight and back.
 
-# Installation
+## Installation
 
 ```console
 gem install time_of_day_attr
 ```
 
-# Usage
+## Usage
+
+Define the time of day attributes:
 
 ```ruby
 class BusinessHour < ActiveRecord::Base
   time_of_day_attr :opening, :closing
 end
+```
 
+Converts time of day to seconds since midnight when a string was set:
+```ruby
 business_hour = BusinessHour.new(opening: '9:00', closing: '17:00')
-
 business_hour.opening
  => 32400
 business_hour.closing
  => 61200
+```
 
+To convert back to time of day:
+```ruby
 TimeOfDayAttr.l(business_hour.opening)
  => '9:00'
 TimeOfDayAttr.l(business_hour.closing)
@@ -34,10 +41,9 @@ TimeOfDayAttr.l(business_hour.opening, omit_minutes_at_full_hour: true)
  => '9'
 ```
 
-## Formats
+### Formats
 
-The standard formats for conversation are:
-
+The standard formats for conversation are 'default' and 'hour'.
 ```yml
 en:
   time_of_day:
@@ -51,24 +57,27 @@ You can overwrite them or use custom formats:
 en:
   time_of_day:
     formats:
-      zero_padded: '%H:%M'
+      custom: '%H-%M'
+```
+
+Pass the formats you want for conversation:
+```ruby
+class BusinessHour < ActiveRecord::Base
+  time_of_day_attr :opening, formats: [:custom]
+end
 ```
 
 ```ruby
-class BusinessHour < ActiveRecord::Base
-  time_of_day_attr :opening, formats: [:zero_padded]
-end
-
-business_hour = BusinessHour.new(opening: '09:00')
+business_hour = BusinessHour.new(opening: '09-00')
 
 business_hour.opening
  => 32400
 
-TimeOfDayAttr.l(business_hour.opening, format: :zero_padded)
- => '09:00'
+TimeOfDayAttr.l(business_hour.opening, format: :custom)
+ => '09-00'
 ```
 
-## time of day field
+### time of day field
 
 To get a text field with the converted value:
 ```erb
@@ -77,6 +86,6 @@ To get a text field with the converted value:
 <% end %>
 ```
 
-# License
+## License
 
 This project uses MIT-LICENSE
