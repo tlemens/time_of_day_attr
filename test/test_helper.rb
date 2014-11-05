@@ -2,7 +2,7 @@
 ENV["RAILS_ENV"] = "test"
 
 require 'active_record'
-require 'test/unit'
+require 'minitest/autorun'
 require 'time_of_day_attr'
 
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
