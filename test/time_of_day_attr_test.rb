@@ -24,6 +24,10 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     assert_equal ' 0',      TimeOfDayAttr.localize(86400, omit_minutes_at_full_hour: true)
   end
 
+  test 'localizing nil should return nil' do
+    assert_nil TimeOfDayAttr.localize(nil)
+  end
+
   test 'time of day attr setter should delocalize value' do
     business_hour = BusinessHour.new(opening: '9:00', closing: '17:00')
     assert_equal 32400, business_hour.opening
