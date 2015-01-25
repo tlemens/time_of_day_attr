@@ -1,5 +1,5 @@
 # time_of_day_attr
-[![Gem Version](https://badge.fury.io/rb/time_of_day_attr.png)](http://badge.fury.io/rb/time_of_day_attr) [![Code Climate](https://codeclimate.com/github/clemenst/time_of_day_attr.png)](https://codeclimate.com/github/clemenst/time_of_day_attr)[![License](https://img.shields.io/npm/l/express.svg?style=flat)](http://clemenst.mit-license.org)
+[![Gem Version](https://badge.fury.io/rb/time_of_day_attr.png)](http://badge.fury.io/rb/time_of_day_attr) [![Code Climate](https://codeclimate.com/github/clemenst/time_of_day_attr.png)](https://codeclimate.com/github/clemenst/time_of_day_attr) [![License](https://img.shields.io/npm/l/express.svg?style=flat)](http://clemenst.mit-license.org)
 
 Convert time of day to seconds since midnight and back.
 
