@@ -6,7 +6,7 @@ files = Dir[File.join(File.dirname(__FILE__), '../config/locales/*.yml')]
 I18n.load_path.concat(files)
 
 module TimeOfDayAttr
-  
+
   class << self
 
     def delocalize(value, options = {})
@@ -24,7 +24,7 @@ module TimeOfDayAttr
       time_of_day = time.strftime(format)
       if options[:omit_minutes_at_full_hour]
         if time_of_day.end_with?('00')
-          time_of_day = time_of_day[0...-3]   
+          time_of_day = time_of_day[0...-3]
         end
       end
       time_of_day
