@@ -12,7 +12,7 @@ module TimeOfDayAttr
     def delocalize(value, options = {})
       format  = options[:format] || :default
       format  = translate_format(format) if format.is_a?(Symbol)
-      time    = Time.strptime(value, format)
+      time    = Time.strptime(value, format).change(month: 1, day: 1)
       time.seconds_since_midnight.to_i
     end
 
@@ -20,7 +20,7 @@ module TimeOfDayAttr
       return value unless value.respond_to?(:seconds)
       format  = options[:format] || :default
       format  = translate_format(format) if format.is_a?(Symbol)
-      time    = Time.now.at_midnight + value.seconds
+      time    = Time.now.change(month: 1, day: 1).at_midnight + value.seconds
       time_of_day = time.strftime(format)
       if options[:omit_minutes_at_full_hour]
         if time_of_day.end_with?('00')
@@ -30,6 +30,8 @@ module TimeOfDayAttr
       time_of_day
     end
     alias :l :localize
+
+    private
 
     def translate_format(format)
       I18n.translate("time_of_day.formats.#{format}")
