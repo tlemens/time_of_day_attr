@@ -40,13 +40,18 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     assert_equal 61200, business_hour.closing
   end
 
-  test 'time of day attr setter should ignore invalid formats' do
-    business_hour = BusinessHour.new(opening: 'Nine', closing: 'Five')
+  test 'time of day attr setter should raise invalid formats' do
+    assert_raise ArgumentError do
+      business_hour = BusinessHour.new(opening: 'Nine', closing: 'Five')
+    end
+    business_hour = BusinessHour.new
     assert_nil business_hour.opening
     assert_nil business_hour.closing
     business_hour.opening = '9'
     assert_equal 32400, business_hour.opening
-    business_hour.opening = 'Nine'
+    assert_raise ArgumentError do
+      business_hour.opening = 'Nine'
+    end
     assert_equal 32400, business_hour.opening
     business_hour.opening = '9:30'
     assert_equal 34200, business_hour.opening

@@ -4,16 +4,23 @@ module TimeOfDayAttr
 
     module ClassMethods
 
-      def time_of_day_attr *attrs
+      def time_of_day_attr(*attrs)
         options = attrs.extract_options!
         options[:formats] ||= [:default, :hour]
         attrs.each do |attr|
           define_method("#{attr}=") do |value|
             if value.is_a?(String)
-              delocalized_values = options[:formats].map { |format| TimeOfDayAttr.delocalize(value, format: format) rescue nil }
-              value = delocalized_values.compact.first || send(attr)
+              delocalized_values = options[:formats].map do |format|
+                begin
+                  TimeOfDayAttr.delocalize(value, format: format)
+                rescue ArgumentError
+                  nil
+                end
+              end
+              delocalized_value = delocalized_values.compact.first
+              raise(ArgumentError, "invalid time of day #{value} for formats #{options[:formats].join(', ')}") unless delocalized_value
             end
-            super(value)
+            super(delocalized_value || value)
           end
         end
       end
