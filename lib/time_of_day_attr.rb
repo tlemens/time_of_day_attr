@@ -20,7 +20,7 @@ module TimeOfDayAttr
       return value unless value.respond_to?(:seconds)
       format  = options[:format] || :default
       format  = translate_format(format) if format.is_a?(Symbol)
-      time    = Time.now.change(month: 1, day: 1).at_midnight + value.seconds
+      time    = Time.now.beginning_of_year.at_midnight + value.seconds
       time_of_day = time.strftime(format)
       if options[:omit_minutes_at_full_hour]
         if time_of_day.end_with?('00')
