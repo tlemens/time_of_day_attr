@@ -36,7 +36,6 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
 
   test 'time of day attr setter should delocalize hour formatted value' do
     business_hour = BusinessHour.new(opening: '9', closing: '17')
-    assert business_hour.save
     assert_equal 32400, business_hour.opening
     assert_equal 61200, business_hour.closing
   end
