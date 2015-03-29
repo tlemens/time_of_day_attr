@@ -36,23 +36,19 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
 
   test 'time of day attr setter should delocalize hour formatted value' do
     business_hour = BusinessHour.new(opening: '9', closing: '17')
+    assert business_hour.save
     assert_equal 32400, business_hour.opening
     assert_equal 61200, business_hour.closing
   end
 
-  test 'time of day attr setter should raise invalid formats' do
-    assert_raise ArgumentError do
-      business_hour = BusinessHour.new(opening: 'Nine', closing: 'Five')
-    end
-    business_hour = BusinessHour.new
+  test 'time of day attr setter should ignore invalid formats' do
+    business_hour = BusinessHour.new(opening: 'Nine', closing: 'Five')
     assert_nil business_hour.opening
     assert_nil business_hour.closing
     business_hour.opening = '9'
     assert_equal 32400, business_hour.opening
-    assert_raise ArgumentError do
-      business_hour.opening = 'Nine'
-    end
-    assert_equal 32400, business_hour.opening
+    business_hour.opening = 'Nine'
+    assert_nil business_hour.opening
     business_hour.opening = '9:30'
     assert_equal 34200, business_hour.opening
     business_hour.opening = 55800

@@ -18,9 +18,10 @@ module TimeOfDayAttr
                 end
               end
               delocalized_value = delocalized_values.compact.first
-              raise(ArgumentError, "invalid time of day #{value} for formats #{options[:formats].join(', ')}") unless delocalized_value
+              super(delocalized_value)
+            else
+              super(value)
             end
-            super(delocalized_value || value)
           end
         end
       end
