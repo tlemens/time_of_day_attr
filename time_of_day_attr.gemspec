@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["clemens_t@web.de"]
   s.homepage    = "https://github.com/clemenst/time_of_day_attr"
   s.summary     = "Convert time of day to seconds since midnight and back."
-  s.description = "Adds time_of_day_attr to your models. Will try to convert time of day to seconds since midnight when a string was set. Localized formats for conversation can be added to your translation files. TimeOfDayAttr.localize converts seconds since midnight back to time of day."
+  s.description = "Adds time_of_day_attr to your models. Will try to convert time of day to seconds since midnight when a string was set. Localized formats for conversion can be added to your translation files. TimeOfDayAttr.localize converts seconds since midnight back to time of day."
   s.files = Dir["{config,lib}/**/*"] + ["Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
