@@ -43,7 +43,7 @@ TimeOfDayAttr.l(business_hour.opening, omit_minutes_at_full_hour: true)
 
 ### Formats
 
-The standard formats for conversation are 'default' and 'hour'.
+The standard formats for conversion are 'default' and 'hour'.
 ```yml
 en:
   time_of_day:
@@ -60,7 +60,7 @@ en:
       custom: '%H-%M'
 ```
 
-Pass the formats you want for conversation:
+Pass the formats you want for conversion:
 ```ruby
 class BusinessHour < ActiveRecord::Base
   time_of_day_attr :opening, formats: [:custom]
