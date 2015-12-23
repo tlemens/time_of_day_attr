@@ -13,7 +13,12 @@ module TimeOfDayAttr
       format  = options[:format] || :default
       format  = translate_format(format) if format.is_a?(Symbol)
       time    = Time.strptime(value, format).change(month: 1, day: 1)
-      time.seconds_since_midnight.to_i
+      seconds = time.seconds_since_midnight.to_i
+      if seconds.zero? && value.starts_with?('24')
+        24.hours.to_i
+      else
+        seconds
+      end
     end
 
     def localize(value, options = {})
@@ -22,6 +27,9 @@ module TimeOfDayAttr
       format  = translate_format(format) if format.is_a?(Symbol)
       time    = Time.now.beginning_of_year.at_midnight + value.seconds
       time_of_day = time.strftime(format)
+      if 24.hours.to_i == value
+        time_of_day.gsub!(' 0', '24')
+      end
       if options[:omit_minutes_at_full_hour]
         if time_of_day.end_with?('00')
           time_of_day = time_of_day[0...-3]

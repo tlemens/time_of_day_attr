@@ -14,14 +14,12 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
   test 'localize time of day' do
     assert_equal ' 9:00', TimeOfDayAttr.localize(32400)
     assert_equal '14:45', TimeOfDayAttr.localize(53100)
-    assert_equal ' 0:00', TimeOfDayAttr.localize(86400)
   end
 
   test 'localize time of day and omit minutes at full hour' do
     assert_equal ' 9',      TimeOfDayAttr.localize(32400, omit_minutes_at_full_hour: true)
     assert_equal '14',      TimeOfDayAttr.localize(50400, omit_minutes_at_full_hour: true)
     assert_equal '14:45',   TimeOfDayAttr.localize(53100, omit_minutes_at_full_hour: true)
-    assert_equal ' 0',      TimeOfDayAttr.localize(86400, omit_minutes_at_full_hour: true)
   end
 
   test 'localizing nil should return nil' do
@@ -54,5 +52,21 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     assert_equal 55800, business_hour.opening
     business_hour.opening = nil
     assert_nil business_hour.opening
+    business_hour.opening = '25:00'
+    assert_nil business_hour.opening
+    business_hour.opening = '24:30'
+    assert_nil business_hour.opening
   end
+
+
+  test '24 should be usable' do
+    business_hour = BusinessHour.new(opening: '0', closing: '24')
+    assert_equal 0, business_hour.opening
+    assert_equal 86400, business_hour.closing
+    assert_equal ' 0:00', TimeOfDayAttr.localize(business_hour.opening)
+    assert_equal '24:00', TimeOfDayAttr.localize(business_hour.closing)
+    assert_equal ' 0', TimeOfDayAttr.localize(business_hour.opening, omit_minutes_at_full_hour: true)
+    assert_equal '24', TimeOfDayAttr.localize(business_hour.closing, omit_minutes_at_full_hour: true)
+  end
+
 end
