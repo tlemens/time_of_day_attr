@@ -25,6 +25,8 @@ module TimeOfDayAttr
       return value unless value.respond_to?(:seconds)
       format  = options[:format] || :default
       format  = translate_format(format) if format.is_a?(Symbol)
+      # Switch to beginning of year to prevent wrong time on the day of time change
+      # see https://en.wikipedia.org/wiki/Daylight_saving_time
       time    = Time.now.beginning_of_year.at_midnight + value.seconds
       time_of_day = time.strftime(format)
       if 24.hours.to_i == value
