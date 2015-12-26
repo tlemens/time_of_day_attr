@@ -13,7 +13,11 @@ module TimeOfDayAttr
               delocalized_values = options[:formats].map do |format|
                 begin
                   TimeOfDayAttr.delocalize(value, format: format)
-                rescue ArgumentError
+                rescue ArgumentError => e
+                  if 'argument out of range' == e.message
+                    super(nil)
+                    return
+                  end
                   nil
                 end
               end
