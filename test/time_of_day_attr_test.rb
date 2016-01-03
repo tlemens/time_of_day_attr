@@ -58,7 +58,6 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     assert_nil business_hour.opening
   end
 
-
   test '24 should be usable' do
     business_hour = BusinessHour.new(opening: '0', closing: '24')
     assert_equal 0, business_hour.opening
