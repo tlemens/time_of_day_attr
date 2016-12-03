@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.description = "This ruby gem converts time of day to seconds since midnight and back. The seconds value is stored in the database and can be used for calculations and validations."
   s.files = Dir["{config,lib}/**/*"] + ["Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
+  s.license = "MIT"
 
   s.add_dependency "rails", ">= 3.2.14"
 

@@ -33,4 +33,6 @@ module TimeOfDayAttr
     end
   end
 end
-ActiveRecord::Base.send(:include, TimeOfDayAttr::ActiveRecordExt)
+ActiveSupport.on_load(:active_record) do
+  include TimeOfDayAttr::ActiveRecordExt
+end
