@@ -12,6 +12,4 @@ gemspec
 # your gem to rubygems.org.
 
 gem 'minitest'
-
-# To use debugger
-# gem 'debugger'
+gem 'rubocop'

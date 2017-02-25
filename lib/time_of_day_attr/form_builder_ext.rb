@@ -1,3 +1,4 @@
+require 'action_view'
 module TimeOfDayAttr
   module FormBuilderExt
     extend ActiveSupport::Concern

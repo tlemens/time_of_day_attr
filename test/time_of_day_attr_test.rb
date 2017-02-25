@@ -8,7 +8,7 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     assert_equal 61140, TimeOfDayAttr.delocalize('16:59')
     assert_equal 32400, TimeOfDayAttr.delocalize('9:00')
     assert_equal 32400, TimeOfDayAttr.delocalize('09:00')
-    assert_equal 32400, TimeOfDayAttr.delocalize('9', format: :hour)
+    assert_equal 32400, TimeOfDayAttr.delocalize('9', [:hour])
   end
 
   test 'localize time of day' do
@@ -17,9 +17,9 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
   end
 
   test 'localize time of day and omit minutes at full hour' do
-    assert_equal ' 9',      TimeOfDayAttr.localize(32400, omit_minutes_at_full_hour: true)
-    assert_equal '14',      TimeOfDayAttr.localize(50400, omit_minutes_at_full_hour: true)
-    assert_equal '14:45',   TimeOfDayAttr.localize(53100, omit_minutes_at_full_hour: true)
+    assert_equal ' 9',      TimeOfDayAttr.localize(32400, :default, omit_minutes_at_full_hour: true)
+    assert_equal '14',      TimeOfDayAttr.localize(50400, :default, omit_minutes_at_full_hour: true)
+    assert_equal '14:45',   TimeOfDayAttr.localize(53100, :default, omit_minutes_at_full_hour: true)
   end
 
   test 'localizing nil should return nil' do
@@ -55,6 +55,7 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     business_hour.opening = '25:00'
     assert_nil business_hour.opening
     business_hour.opening = '24:30'
+    puts business_hour.opening
     assert_nil business_hour.opening
   end
 
@@ -64,8 +65,8 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     assert_equal 86400, business_hour.closing
     assert_equal ' 0:00', TimeOfDayAttr.localize(business_hour.opening)
     assert_equal '24:00', TimeOfDayAttr.localize(business_hour.closing)
-    assert_equal ' 0', TimeOfDayAttr.localize(business_hour.opening, omit_minutes_at_full_hour: true)
-    assert_equal '24', TimeOfDayAttr.localize(business_hour.closing, omit_minutes_at_full_hour: true)
+    assert_equal ' 0', TimeOfDayAttr.localize(business_hour.opening, :default, omit_minutes_at_full_hour: true)
+    assert_equal '24', TimeOfDayAttr.localize(business_hour.closing, :default, omit_minutes_at_full_hour: true)
   end
 
 end
