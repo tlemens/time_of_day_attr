@@ -1,4 +1,3 @@
-require 'action_view'
 module TimeOfDayAttr
   module FormBuilderExt
     extend ActiveSupport::Concern
@@ -10,7 +9,8 @@ module TimeOfDayAttr
       end
       text_field(method, options)
     end
-
   end
 end
-ActionView::Helpers::FormBuilder.send(:include, TimeOfDayAttr::FormBuilderExt)
+ActiveSupport.on_load :action_view do
+  ActionView::Helpers::FormBuilder.send(:include, TimeOfDayAttr::FormBuilderExt)
+end

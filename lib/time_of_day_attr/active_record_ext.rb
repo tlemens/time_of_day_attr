@@ -10,7 +10,8 @@ module TimeOfDayAttr
           attrs.each do |attr|
             define_method("#{attr}=") do |value|
               if value.is_a?(String)
-                delocalized_value = TimeOfDayAttr.delocalize(*[value, options[:formats]].compact)
+                delocalize_args = [value, options[:formats]].compact
+                delocalized_value = TimeOfDayAttr.delocalize(*delocalize_args)
                 super(delocalized_value)
               else
                 super(value)
@@ -28,7 +29,6 @@ module TimeOfDayAttr
     end
   end
 end
-
 ActiveSupport.on_load(:active_record) do
   include TimeOfDayAttr::ActiveRecordExt
 end
