@@ -3,9 +3,10 @@ module TimeOfDayAttr
     extend ActiveSupport::Concern
 
     def time_of_day_field(method, options = {})
-      unless options[:value]
-        value = object.send(method)
-        options[:value] = TimeOfDayAttr.localize(value, options.extract!(:format, :omit_minutes_at_full_hour))
+      options[:value] ||= begin
+        value = object.public_send(method)
+        format = options.delete(:format) || :default
+        TimeOfDayAttr.localize(value, format, options.extract!(:omit_minutes_at_full_hour))
       end
       text_field(method, options)
     end
