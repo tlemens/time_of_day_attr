@@ -11,5 +11,9 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-gem 'minitest'
+group :test do
+  gem 'minitest'
+  gem 'shoulda-context'
+end
+
 gem 'rubocop'

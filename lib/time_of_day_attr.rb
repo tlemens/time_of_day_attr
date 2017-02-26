@@ -23,6 +23,7 @@ module TimeOfDayAttr
           end
         end
       end
+      nil
     end
 
     def localize(value, format = :default, options = {})

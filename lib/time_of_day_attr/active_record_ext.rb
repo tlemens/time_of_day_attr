@@ -1,3 +1,5 @@
+require 'active_record'
+
 module TimeOfDayAttr
   module ActiveRecordExt
     extend ActiveSupport::Concern
