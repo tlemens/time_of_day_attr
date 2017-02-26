@@ -41,6 +41,31 @@ TimeOfDayAttr.l(business_hour.opening, omit_minutes_at_full_hour: true)
  => '9'
 ```
 
+### Prepend
+
+You can use the prepend option to process the time of day before it gets converted:
+
+```ruby
+class BusinessHour < ActiveRecord::Base
+  time_of_day_attr :opening
+  time_of_day_attr :closing, prepend: true
+
+  def opening=(value)
+    puts "opening: #{value}"
+    super(value)
+  end
+
+  def closing=(value)
+    puts "closing: #{value}"
+    super(value)
+  end
+end
+
+BusinessHour.new(opening: '9:00', closing: '17:00')
+opening: 32400
+closing: 17:00
+```
+
 ### Formats
 
 The standard formats for conversion are 'default' and 'hour'.
