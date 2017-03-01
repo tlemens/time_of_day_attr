@@ -9,9 +9,9 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     end
 
     should 'omit minutes at full hour' do
-      assert_equal ' 9',      TimeOfDayAttr.localize(32400, :default, omit_minutes_at_full_hour: true)
-      assert_equal '14',      TimeOfDayAttr.localize(50400, :default, omit_minutes_at_full_hour: true)
-      assert_equal '14:45',   TimeOfDayAttr.localize(53100, :default, omit_minutes_at_full_hour: true)
+      assert_equal ' 9',      TimeOfDayAttr.localize(32400, omit_minutes_at_full_hour: true)
+      assert_equal '14',      TimeOfDayAttr.localize(50400, omit_minutes_at_full_hour: true)
+      assert_equal '14:45',   TimeOfDayAttr.localize(53100, omit_minutes_at_full_hour: true)
     end
 
     should 'convert nil to nil' do
@@ -21,8 +21,8 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
     should 'support 24 hours' do
       assert_equal ' 0:00', TimeOfDayAttr.localize(0)
       assert_equal '24:00', TimeOfDayAttr.localize(86400)
-      assert_equal ' 0', TimeOfDayAttr.localize(0, :default, omit_minutes_at_full_hour: true)
-      assert_equal '24', TimeOfDayAttr.localize(86400, :default, omit_minutes_at_full_hour: true)
+      assert_equal ' 0', TimeOfDayAttr.localize(0, omit_minutes_at_full_hour: true)
+      assert_equal '24', TimeOfDayAttr.localize(86400, omit_minutes_at_full_hour: true)
     end
   end
 
@@ -33,7 +33,7 @@ class TimeOfDayAttrTest < ActiveSupport::TestCase
       assert_equal 61140, TimeOfDayAttr.delocalize('16:59')
       assert_equal 32400, TimeOfDayAttr.delocalize('9:00')
       assert_equal 32400, TimeOfDayAttr.delocalize('09:00')
-      assert_equal 32400, TimeOfDayAttr.delocalize('9', [:hour])
+      assert_equal 32400, TimeOfDayAttr.delocalize('9', formats: [:hour])
     end
 
     should 'convert out of range time of day to nil' do

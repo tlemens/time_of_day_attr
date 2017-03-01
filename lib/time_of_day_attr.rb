@@ -7,12 +7,16 @@ formats = Dir[File.join(File.dirname(__FILE__), '../config/locales/*.yml')]
 I18n.load_path.concat(formats)
 
 module TimeOfDayAttr
+  DEFAULT_FORMATS = [:default, :hour].freeze
 
   class << self
 
-    def delocalize(value, formats = [:default, :hour])
+    def delocalize(value, options = {})
       time_of_day = TimeOfDay.new(value)
-      formats.each do |format|
+
+      formats = options[:formats] || DEFAULT_FORMATS
+
+      delocalized_values = formats.map do |format|
         begin
           return time_of_day.to_seconds(time_format(format))
         rescue ArgumentError => e
@@ -23,11 +27,14 @@ module TimeOfDayAttr
           end
         end
       end
-      nil
+
+      delocalized_values.compact.first
     end
 
-    def localize(value, format = :default, options = {})
+    def localize(value, options = {})
       return value unless value.respond_to?(:seconds)
+
+      format = options[:format] || DEFAULT_FORMATS.first
 
       time_of_day = Seconds.new(value).to_time_of_day(time_format(format))
 
@@ -41,7 +48,7 @@ module TimeOfDayAttr
 
     def time_format(format)
       translate = format.is_a?(Symbol)
-      
+
       translate ? I18n.translate("time_of_day.formats.#{format}") : format
     end
 

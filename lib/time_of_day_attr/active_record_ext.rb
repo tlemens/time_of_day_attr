@@ -3,17 +3,16 @@ require 'active_record'
 module TimeOfDayAttr
   module ActiveRecordExt
     extend ActiveSupport::Concern
-    
+
     module ClassMethods
       def time_of_day_attr(*attrs)
         options = attrs.extract_options!
-        
+
         writers = Module.new do
           attrs.each do |attr|
             define_method("#{attr}=") do |value|
               if value.is_a?(String)
-                delocalize_args = [value, options[:formats]].compact
-                delocalized_value = TimeOfDayAttr.delocalize(*delocalize_args)
+                delocalized_value = TimeOfDayAttr.delocalize(value, options)
                 super(delocalized_value)
               else
                 super(value)
