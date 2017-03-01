@@ -1,7 +1,7 @@
 module TimeOfDayAttr
   TimeOfDay = Struct.new(:value) do
     def to_seconds(time_format)
-      time  = Time.strptime(value, time_format)
+      time = Time.strptime(value, time_format)
       # Switch to beginning of year to prevent wrong conversion on the day of time change
       # see https://en.wikipedia.org/wiki/Daylight_saving_time
       time = time.change(month: 1, day: 1)

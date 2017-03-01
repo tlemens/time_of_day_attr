@@ -10,7 +10,6 @@ module TimeOfDayAttr
   DEFAULT_FORMATS = [:default, :hour].freeze
 
   class << self
-
     def delocalize(value, options = {})
       time_of_day = TimeOfDay.new(value)
 
@@ -20,11 +19,8 @@ module TimeOfDayAttr
         begin
           return time_of_day.to_seconds(time_format(format))
         rescue ArgumentError => e
-          if e.message.include?('out of range')
-            return nil
-          else
-            next
-          end
+          return nil if e.message.include?('out of range')
+          next
         end
       end
 
@@ -42,7 +38,7 @@ module TimeOfDayAttr
 
       omit_minutes ? time_of_day[0...-3] : time_of_day
     end
-    alias :l :localize
+    alias l localize
 
     private
 
@@ -51,6 +47,5 @@ module TimeOfDayAttr
 
       translate ? I18n.translate("time_of_day.formats.#{format}") : format
     end
-
   end
 end
