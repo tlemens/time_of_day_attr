@@ -15,12 +15,12 @@ class ActiveRecordExtTest < ActiveSupport::TestCase
       assert_equal 61200, @business_hour.closing
     end
   end
-    
+
   context 'hour formatted time of day value' do
     setup do
       @business_hour = BusinessHour.new(opening: '9', closing: '17')
     end
-    
+
     should 'be converted to seconds since midnight' do
       assert_equal 32400, @business_hour.opening
       assert_equal 61200, @business_hour.closing
@@ -54,8 +54,11 @@ class ActiveRecordExtTest < ActiveSupport::TestCase
     end
 
     should 'be supported' do
-      assert_equal '9', @business_hour.opening_value
-      assert_equal 32400, @business_hour.closing_value
+      assert_equal '9', @business_hour.tracked_opening
+      assert_equal 32400, @business_hour.opening
+
+      assert_equal 32400, @business_hour.tracked_closing
+      assert_equal 32400, @business_hour.closing
     end
   end
 end
