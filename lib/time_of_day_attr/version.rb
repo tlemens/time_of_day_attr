@@ -1,3 +1,3 @@
 module TimeOfDayAttr
-  VERSION = '2'.freeze
+  VERSION = '2.0.1'.freeze
 end

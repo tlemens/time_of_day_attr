@@ -17,7 +17,7 @@ module TimeOfDayAttr
 
       delocalized_values = formats.map do |format|
         begin
-          return time_of_day.to_seconds(time_format(format))
+          time_of_day.to_seconds(time_format(format))
         rescue ArgumentError => e
           return nil if e.message.include?('out of range')
           next
