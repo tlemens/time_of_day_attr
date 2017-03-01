@@ -1,7 +1,7 @@
 # Time of day attributes for your Rails model
 [![Gem Version](https://badge.fury.io/rb/time_of_day_attr.png)](http://badge.fury.io/rb/time_of_day_attr) [![Code Climate](https://codeclimate.com/github/clemenst/time_of_day_attr.png)](https://codeclimate.com/github/clemenst/time_of_day_attr) [![License](https://img.shields.io/npm/l/express.svg?style=flat)](http://clemenst.mit-license.org)
 
-This ruby gem converts time of day to seconds since midnight and back. The seconds value is stored in the database and can be used for calculations and validations. 
+This ruby gem converts time of day to seconds since midnight and back. The seconds value is stored in the database and can be used for calculations and validations.
 
 ## Installation
 
@@ -73,6 +73,37 @@ business_hour.opening
  => 32400
 TimeOfDayAttr.l(business_hour.opening, format: :custom)
  => '09-00'
+```
+
+### Prepending
+
+If you want to process the converted value in your model, you can use the prepend option:
+
+```ruby
+class BusinessHour < ActiveRecord::Base
+  attr_reader :tracked_opening, :tracked_closing
+
+  time_of_day_attr :opening
+  time_of_day_attr :closing, prepend: true
+
+  def opening=(value)
+    @tracked_opening = value
+    super(value)
+  end
+
+  def closing=(value)
+    @tracked_closing = value
+    super(value)
+  end
+end
+```
+
+```ruby
+business_hour = BusinessHour.new(opening: '9', closing: '9')
+business_hour.tracked_opening
+=> '9'
+business_hour.tracked_closing
+=> 32400
 ```
 
 ### time of day field
