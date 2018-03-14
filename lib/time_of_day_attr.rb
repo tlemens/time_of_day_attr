@@ -1,4 +1,4 @@
-require 'time_of_day_attr/time_of_day'
+require 'time_of_day_attr/time_of_day_helper'
 require 'time_of_day_attr/seconds'
 require 'time_of_day_attr/active_record_ext'
 require 'time_of_day_attr/form_builder_ext'
@@ -9,24 +9,9 @@ I18n.load_path.concat(formats)
 module TimeOfDayAttr
   DEFAULT_FORMATS = [:default, :hour].freeze
 
+  extend TimeOfDayHelper
+
   class << self
-    def delocalize(value, options = {})
-      time_of_day = TimeOfDay.new(value)
-
-      formats = options[:formats] || DEFAULT_FORMATS
-
-      delocalized_values = formats.map do |format|
-        begin
-          time_of_day.to_seconds(time_format(format))
-        rescue ArgumentError => e
-          return nil if e.message.include?('out of range')
-          next
-        end
-      end
-
-      delocalized_values.compact.first
-    end
-
     def localize(value, options = {})
       return value unless value.respond_to?(:seconds)
 
