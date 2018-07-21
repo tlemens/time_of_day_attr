@@ -1,7 +1,7 @@
 # Time of day attributes for your Rails model
 [![Gem Version](https://badge.fury.io/rb/time_of_day_attr.png)](http://badge.fury.io/rb/time_of_day_attr) [![Code Climate](https://codeclimate.com/github/clemenst/time_of_day_attr.png)](https://codeclimate.com/github/clemenst/time_of_day_attr) [![License](https://img.shields.io/npm/l/express.svg?style=flat)](http://clemenst.mit-license.org)
 
-This ruby gem converts time of day to seconds since midnight and back. The seconds value is stored in the database and can be used for calculations and validations.
+This ruby gem converts time of day to seconds (since midnight) and back. The value in seconds can be used for calculations and validations.
 
 ## Installation
 

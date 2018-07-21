@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/clemenst/time_of_day_attr'
   s.summary     = 'Time of day attributes for your Rails model'
   # rubocop:disable Metrics/LineLength
-  s.description = 'This ruby gem converts time of day to seconds since midnight and back. The value in seconds can be used for calculations and validations.'
+  s.description = 'This ruby gem converts time of day to seconds (since midnight) and back. The value in seconds can be used for calculations and validations.'
   # rubocop:enable Metrics/LineLength
   s.files = Dir['{config,lib}/**/*'] + ['Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
