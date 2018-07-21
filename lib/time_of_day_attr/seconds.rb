@@ -7,8 +7,11 @@ module TimeOfDayAttr
       time_format = TimeFormat.translate_format(format)
 
       time_of_day = seconds_to_time_of_day(value, time_format)
-
-      options[:omit_minutes_at_full_hour] ? TimeOfDay.omit_minutes_at_full_hour(time_of_day) : time_of_day
+      if options[:omit_minutes_at_full_hour]
+        TimeOfDay.omit_minutes_at_full_hour(time_of_day)
+      else
+        time_of_day
+      end
     end
 
     def self.seconds_to_time_of_day(value, time_format)
