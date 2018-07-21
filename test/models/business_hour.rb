@@ -1,4 +1,8 @@
+# rubocop:disable Rails/ApplicationRecord
 class BusinessHour < ActiveRecord::Base
+  # rubocop:enable Rails/ApplicationRecord
+  include TimeOfDayAttr::ActiveRecordExtension
+
   attr_reader :tracked_opening, :tracked_closing
 
   time_of_day_attr :opening

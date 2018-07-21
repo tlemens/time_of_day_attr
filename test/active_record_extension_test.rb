@@ -4,7 +4,7 @@ ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:'
 require_relative 'schema'
 require_relative 'models/business_hour'
 
-class ActiveRecordExtTest < ActiveSupport::TestCase
+class ActiveRecordExtensionTest < ActiveSupport::TestCase
   context 'time of day value' do
     setup do
       @business_hour = BusinessHour.new(opening: '9:00', closing: '17:00')
