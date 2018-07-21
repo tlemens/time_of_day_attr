@@ -15,4 +15,5 @@ group :test do
   gem 'shoulda-context'
 end
 
+gem 'rails'
 gem 'rubocop'

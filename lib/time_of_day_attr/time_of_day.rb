@@ -1,41 +1,44 @@
 module TimeOfDayAttr
-  module TimeOfDayHelper
-    def delocalize(time_of_day, options = {})
+  module TimeOfDay
+    def self.convert_to_seconds(time_of_day, options = {})
       formats = options[:formats] || DEFAULT_FORMATS
-      catch(:time_of_day_invalid) do
+      catch(:out_of_range) do
         formats.each do |format|
-          seconds = time_of_day_to_seconds(time_of_day, time_format(format))
+          time_format = TimeFormat.translate_format(format)
+          seconds = time_of_day_to_seconds(time_of_day, time_format)
           return seconds if seconds
         end
       end
       nil
     end
 
-    private
-
-    def seconds_since_midnight(time_of_day, time)
+    def self.seconds_since_midnight(time_of_day, time)
       seconds = time.seconds_since_midnight
       seconds = 24.hours if time_of_day_24_00?(time_of_day, seconds)
       seconds.to_i
     end
+    private_class_method :seconds_since_midnight
 
-    def time_of_day_24_00?(time_of_day, seconds)
+    def self.time_of_day_24_00?(time_of_day, seconds)
       time_of_day.starts_with?('24') && seconds.zero?
     end
+    private_class_method :time_of_day_24_00?
 
-    def time_of_day_to_seconds(time_of_day, time_format)
+    def self.time_of_day_to_seconds(time_of_day, time_format)
       time = time_of_day_to_time(time_of_day, time_format)
       return unless time
       seconds_since_midnight(time_of_day, time)
     end
+    private_class_method :time_of_day_to_seconds
 
-    def time_of_day_to_time(time_of_day, time_format)
+    def self.time_of_day_to_time(time_of_day, time_format)
       time = Time.strptime(time_of_day, time_format)
       # Switch to beginning of year to prevent wrong conversion on the day of time change
       # see https://en.wikipedia.org/wiki/Daylight_saving_time
       time.change(month: 1, day: 1)
     rescue ArgumentError => e
-      throw(:time_of_day_invalid) if e.message.include?('out of range')
+      throw(:out_of_range) if e.message.include?('out of range')
     end
+    private_class_method :time_of_day_to_time
   end
 end

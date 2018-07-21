@@ -1,11 +1,7 @@
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 Style/Documentation:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 184
-
-Metrics/MethodLength:
-  Max: 18
+  Max: 92
+  Exclude:
+    - test/**/*

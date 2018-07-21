@@ -1,36 +1,23 @@
-require 'time_of_day_attr/time_of_day_helper'
-require 'time_of_day_attr/seconds'
-require 'time_of_day_attr/active_record_ext'
-require 'time_of_day_attr/form_builder_ext'
-
-formats = Dir[File.join(File.dirname(__FILE__), '../config/locales/*.yml')]
-I18n.load_path.concat(formats)
-
 module TimeOfDayAttr
-  DEFAULT_FORMATS = [:default, :hour].freeze
+  DEFAULT_FORMATS = %i[default hour].freeze
 
-  extend TimeOfDayHelper
+  autoload :ActiveRecordExtension, 'time_of_day_attr/active_record_extension'
+  autoload :FormBuilderExtension, 'time_of_day_attr/form_builder_extension'
+  autoload :Seconds, 'time_of_day_attr/seconds'
+  autoload :TimeFormat, 'time_of_day_attr/time_format'
+  autoload :TimeOfDay, 'time_of_day_attr/time_of_day'
 
-  class << self
-    def localize(value, options = {})
-      return value unless value.respond_to?(:seconds)
+  require 'i18n'
+  I18n.load_path << File.expand_path('../config/locales/time_of_day.en.yml', __dir__)
+  I18n.load_path << File.expand_path('../config/locales/time_of_day.de.yml', __dir__)
 
-      format = options[:format] || DEFAULT_FORMATS.first
+  def self.delocalize(time_of_day, options = {})
+    TimeOfDay.convert_to_seconds(time_of_day, options)
+  end
 
-      time_of_day = Seconds.new(value).to_time_of_day(time_format(format))
-
-      omit_minutes = options[:omit_minutes_at_full_hour] && time_of_day.end_with?('00')
-
-      omit_minutes ? time_of_day[0...-3] : time_of_day
-    end
-    alias l localize
-
-    private
-
-    def time_format(format)
-      translate = format.is_a?(Symbol)
-
-      translate ? I18n.translate("time_of_day.formats.#{format}") : format
-    end
+  def self.localize(seconds, options = {})
+    Seconds.convert_to_time_of_day(seconds, options)
   end
 end
+
+require 'time_of_day_attr/railtie' if defined?(Rails)
