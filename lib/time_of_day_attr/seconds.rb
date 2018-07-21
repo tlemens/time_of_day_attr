@@ -8,9 +8,7 @@ module TimeOfDayAttr
 
       time_of_day = seconds_to_time_of_day(value, time_format)
 
-      omit_minutes = options[:omit_minutes_at_full_hour] && time_of_day.end_with?('00')
-
-      omit_minutes ? time_of_day[0...-3] : time_of_day
+      options[:omit_minutes_at_full_hour] ? TimeOfDay.omit_minutes_at_full_hour(time_of_day) : time_of_day
     end
 
     def self.seconds_to_time_of_day(value, time_format)

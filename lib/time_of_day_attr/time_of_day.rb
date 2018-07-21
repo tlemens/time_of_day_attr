@@ -12,6 +12,10 @@ module TimeOfDayAttr
       nil
     end
 
+    def self.omit_minutes_at_full_hour(time_of_day)
+      time_of_day.end_with?('00') ? time_of_day[0...-3] : time_of_day
+    end
+
     def self.seconds_since_midnight(time_of_day, time)
       seconds = time.seconds_since_midnight
       seconds = 24.hours if time_of_day_24_00?(time_of_day, seconds)
