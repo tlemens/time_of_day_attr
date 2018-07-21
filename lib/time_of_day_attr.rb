@@ -18,6 +18,7 @@ module TimeOfDayAttr
   def self.localize(seconds, options = {})
     Seconds.convert_to_time_of_day(seconds, options)
   end
+  singleton_class.send(:alias_method, :l, :localize)
 end
 
 require 'time_of_day_attr/railtie' if defined?(Rails)

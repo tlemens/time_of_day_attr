@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    time_of_day_attr (3.0.0.beta.1)
+    time_of_day_attr (3.0.0)
       i18n (>= 0.7)
 
 GEM

@@ -1,7 +1,7 @@
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = 'time_of_day_attr'
-  s.version     = '3.0.0.beta.1'
+  s.version     = '3.0.0'
   s.authors     = ['Clemens Teichmann']
   s.email       = ['clemens_t@web.de']
   s.homepage    = 'https://github.com/clemenst/time_of_day_attr'
