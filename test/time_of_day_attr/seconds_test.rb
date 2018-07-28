@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module TimeOfDayAttr
-  class TimeOfDayTest < ActiveSupport::TestCase
+  class SecondsTest < ActiveSupport::TestCase
     context '::convert_to_time_of_day' do
       should 'convert seconds to time of day' do
         assert_equal ' 9:00', Seconds.convert_to_time_of_day(32_400)
